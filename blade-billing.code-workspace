@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": "frontend",
+      "name": "Frontend (React)"
+    },
+    {
+      "path": "backend",
+      "name": "Backend (NestJS)"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "frontend/node_modules/typescript/lib"
+  }
+}
