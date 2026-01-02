@@ -1,13 +1,6 @@
 {
   "version": 2,
-    "buildCommand": "prisma generate && npm run build",
-  "builds": [
-    {
-      "src": "api/*.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
+    outes": [
     {
       "src": "/(.*)",
       "dest": "/api/index.ts"
