@@ -1,6 +1,6 @@
 {
   "version": 2,
-    outes": [
+  "routes": [
     {
       "src": "/(.*)",
       "dest": "/api/index.ts"
