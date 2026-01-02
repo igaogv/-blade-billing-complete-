@@ -7,6 +7,7 @@ datasource db {
   // Desenvolvimento local: usar pooler (6543)
   // Produção Vercel: usar unpooled (DATABASE_URL_UNPOOLED no .env)
   url               = env("DATABASE_URL")}
+}
 
 
 model User {
