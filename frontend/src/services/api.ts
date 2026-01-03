@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://esse-aqui-midia-backend.vercel.app/api';
+// VITE_API_URL deve vir das Environment Variables do Vercel
+const API_URL = import.meta.env.VITE_API_URL || 'https://blade-billing-complete.vercel.app/api';
+
+console.log('🔗 API URL configurada:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  withCredentials: false, // Desabilitar credentials quando usando CORS com wildcard
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // ========== CLIENTS ==========
