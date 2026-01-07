@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-// HARDCODED BACKEND URL - FINAL FIX
-const BACKEND_URL = 'https://esse-aqui-midia-backend.vercel.app/api';
+// Backend URL from environment variable
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://blade-billing-complete.vercel.app/api';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
