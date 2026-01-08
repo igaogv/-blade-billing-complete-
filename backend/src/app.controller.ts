@@ -9,9 +9,9 @@ export class AppController {
   root() {
     return {
       message: '✅ Backend is running!',
-      api: 'https://esse-aqui-midia-backend.vercel.app/api',
-      health: 'https://esse-aqui-midia-backend.vercel.app/api/health',
-      swagger: 'https://esse-aqui-midia-backend.vercel.app/api/docs',
+      api: 'https://blade-billing-complete.vercel.app/api',
+      health: 'https://blade-billing-complete.vercel.app/api/health',
+      swagger: 'https://blade-billing-complete.vercel.app/api/docs',
     };
   }
 
