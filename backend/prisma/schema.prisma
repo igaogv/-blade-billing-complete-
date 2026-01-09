@@ -38,10 +38,14 @@ model Invoice {
   client                Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   value                 Float
   status                String
+  paymentStatus         String   @default("pending") // pending, paid, overdue
   dueDate               DateTime
   pixQrCode             String?
   mercadoPagoPaymentId  String?
   mercadoPagoId         String?
+  mpPaymentId           String?   // ID do pagamento no MercadoPago
+  mpStatus              String?   // Status do MP (approved, pending, rejected)
+  paidAt                DateTime? // Data do pagamento
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
@@ -60,4 +64,36 @@ model Appointment {
   updatedAt   DateTime @updatedAt
 
   @@map("appointments")
+}
+
+model MercadopagoPreference {
+  id                String   @id @default(cuid())
+  invoiceId         String   @unique
+  preferenceId      String   @unique
+  initPoint         String
+  sandboxInitPoint  String
+  amount            Float
+  clientEmail       String
+  status            String   @default("active") // active, used, expired
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([invoiceId])
+  @@index([preferenceId])
+  @@map("mercadopago_preferences")
+}
+
+model MercadopagoPayment {
+  id         String   @id @default(cuid())
+  paymentId  String   @unique
+  invoiceId  String
+  amount     Float
+  status     String   // approved, pending, rejected
+  mpResponse Json     // Resposta completa do MercadoPago
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([invoiceId])
+  @@index([paymentId])
+  @@map("mercadopago_payments")
 }
