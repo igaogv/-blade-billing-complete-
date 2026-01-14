@@ -5,7 +5,8 @@
       "src": "api/index.ts",
       "use": "@vercel/node",
       "config": {
-        "maxDuration": 30
+        "maxDuration": 60,
+        "memory": 1024
       }
     }
   ],
@@ -17,5 +18,11 @@
   ],
   "env": {
     "NODE_ENV": "production"
+  },
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 60,
+      "memory": 1024
+    }
   }
 }
