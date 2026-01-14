@@ -12,11 +12,8 @@ async function createApp(): Promise<INestApplication> {
     const expressAdapter = new ExpressAdapter(server);
     app = await NestFactory.create(AppModule, expressAdapter);
 
-        // ✅ ADICIONAR PREFIXO '/api' PARA VERCEL SERVERLESS
-        app.setGlobalPrefix('api');
-    
-    // Não adicionar prefixo aqui - já é feito em src/main.ts
-    // O setGlobalPrefix('api') é aplicado em main.ts para ambos os modos
+    // O prefixo '/api' é definido em src/main.ts
+    // NÃO adicionar novamente aqui para evitar duplicação
     
     // CORS - Aceita qualquer origem (wildcard com credenciais)
     // Isso funciona melhor em produção com Vercel que muda URLs dinâmicamente
