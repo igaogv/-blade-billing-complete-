@@ -5,17 +5,22 @@ import { PrismaService } from '../prisma/prisma.service';
 export class DashboardService {
   constructor(private prisma: PrismaService) {}
 
-  async getStats() {
-    const totalClients = await this.prisma.client.count();
-    const totalInvoices = await this.prisma.invoice.count();
+  async getStats(userId: string) {
+    const totalClients = await this.prisma.client.count({
+      where: { userId },
+    });
+    
+    const totalInvoices = await this.prisma.invoice.count({
+      where: { userId },
+    });
     
     const totalReceivedResult = await this.prisma.invoice.aggregate({
-      where: { status: 'PAID' },
+      where: { userId, status: 'PAID' },
       _sum: { value: true },
     });
     
     const totalPendingResult = await this.prisma.invoice.aggregate({
-      where: { status: 'PENDING' },
+      where: { userId, status: 'PENDING' },
       _sum: { value: true },
     });
 

@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -18,21 +19,25 @@ export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
   @Get()
-  findAll() {
-    return this.clientsService.findAll();
+  findAll(@Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.clientsService.findAll(userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.clientsService.findOne(id);
+  findOne(@Param('id') id: string, @Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.clientsService.findOne(id, userId);
   }
 
   @Post()
   create(
     @Body()
     data: { name: string; email: string; phone: string },
+    @Request() req: any,
   ) {
-    return this.clientsService.create(data);
+    const userId = req.user?.userId || req.user?.sub;
+    return this.clientsService.create(data, userId);
   }
 
   @Put(':id')
@@ -40,12 +45,15 @@ export class ClientsController {
     @Param('id') id: string,
     @Body()
     data: { name?: string; email?: string; phone?: string },
+    @Request() req: any,
   ) {
-    return this.clientsService.update(id, data);
+    const userId = req.user?.userId || req.user?.sub;
+    return this.clientsService.update(id, data, userId);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.clientsService.delete(id);
+  delete(@Param('id') id: string, @Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.clientsService.delete(id, userId);
   }
 }

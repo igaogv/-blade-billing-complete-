@@ -11,10 +11,13 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
   }
   
-  // CORS - Aceita qualquer origem (wildcard com credenciais)
-  // Isso funciona melhor em produção com Vercel que muda URLs dinâmicamente
+  // CORS - Origem whitelist (seguro para produção)
+  const corsOrigin = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+    : ['http://localhost:5173', 'http://localhost:3000'];
+  
   app.enableCors({
-    origin: true, // ✅ Aceita QUALQUER origem
+    origin: corsOrigin,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -28,8 +31,13 @@ async function bootstrap() {
     console.log(`
 ✅ Backend rodando na porta ${port}`);
     console.log(`🌐 Ambiente: ${env}`);
+<<<<<<< HEAD
     console.log(`🔗 CORS habilitado para: QUALQUER ORIGEM`);
     console.log(`📂 Prefixo de API: /api`);
+=======
+    console.log(`🔗 CORS habilitado para: ${corsOrigin.join(', ')}`);
+    console.log(`📍 Prefixo de API: /api`);
+>>>>>>> 276c0a6 (🔐 security: multi-tenancy userId + CORS whitelist + fixes)
     console.log(`🚀 API disponível em http://localhost:${port}/api\n`);
   });
 }

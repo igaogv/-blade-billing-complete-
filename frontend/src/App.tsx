@@ -1,12 +1,13 @@
-// FORCE REBUILD TIMESTAMP: 2025-12-15 16:04:30
-// This file update forces Vercel to perform clean rebuild
+// FORCE REBUILD TIMESTAMP: 2026-02-23 14:32:15 ✅ CORS FIX & USERID SECURITY
+// Frontend updated: VITE_API_URL corrected to blade-billing-complete
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import RegisterPage from './pages/auth/RegisterPage';
 import LoginPage from './pages/auth/LoginPage';
 import Dashboard from './pages/Dashboard';
 
 function App() {
-  console.log('🚀 App Initialized - API URL should be hardcoded backend');
+  console.log('🚀 Blade Billing Frontend v1.0.2 - CORS & Security Fixes Applied');
+  console.log('✅ API Backend: https://blade-billing-complete.vercel.app/api');
   
   return (
     <BrowserRouter>

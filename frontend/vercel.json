@@ -1,6 +1,15 @@
 {
+<<<<<<< HEAD
   "version": 2,
   "builds": [
+=======
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "env": {
+    "VITE_API_URL": "https://blade-billing-complete.vercel.app/api"
+  },
+  "headers": [
+>>>>>>> 276c0a6 (🔐 security: multi-tenancy userId + CORS whitelist + fixes)
     {
       "src": "package.json",
       "use": "@vercel/static-build",

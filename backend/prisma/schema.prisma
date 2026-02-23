@@ -9,18 +9,23 @@ datasource db {
 
 
 model User {
-  id    String     @id @default(cuid())
-  email String     @unique
-  password String
-  name  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  name      String
+  clients   Client[]
+  invoices  Invoice[]
+  appointments Appointment[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@map("users")
 }
 
 model Client {
   id           String        @id @default(cuid())
+  userId       String        // Relação com User
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   name         String
   phone        String
   email        String?
@@ -29,11 +34,14 @@ model Client {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
+  @@index([userId])
   @@map("clients")
 }
 
 model Invoice {
   id                    String   @id @default(cuid())
+  userId                String   // Relação com User
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   clientId              String
   client                Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   value                 Float
@@ -49,11 +57,15 @@ model Invoice {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
+  @@index([userId])
+  @@index([clientId])
   @@map("invoices")
 }
 
 model Appointment {
   id          String   @id @default(cuid())
+  userId      String   // Relação com User
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   clientId    String
   client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   serviceType String
@@ -63,6 +75,8 @@ model Appointment {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  @@index([userId])
+  @@index([clientId])
   @@map("appointments")
 }
 

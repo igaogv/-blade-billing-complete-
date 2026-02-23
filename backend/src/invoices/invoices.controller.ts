@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, UseGuards, Request } from '@nestjs/common';
 import { InvoicesService } from './invoices.service';
 import { WhatsappService } from '../whatsapp/whatsapp.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('invoices')
+@UseGuards(JwtAuthGuard)
 export class InvoicesController {
   constructor(
     private invoicesService: InvoicesService,
@@ -10,24 +12,28 @@ export class InvoicesController {
   ) {}
 
   @Get()
-  async findAll() {
-    return this.invoicesService.findAll();
+  async findAll(@Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.invoicesService.findAll(userId);
   }
 
   @Post()
-  async create(@Body() data: any) {
-    return this.invoicesService.create(data);
+  async create(@Body() data: any, @Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.invoicesService.create(data, userId);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
-    return this.invoicesService.delete(id);
+  async delete(@Param('id') id: string, @Request() req: any) {
+    const userId = req.user?.userId || req.user?.sub;
+    return this.invoicesService.delete(id, userId);
   }
 
   @Post(':id/send-whatsapp')
-  async sendWhatsapp(@Param('id') id: string) {
+  async sendWhatsapp(@Param('id') id: string, @Request() req: any) {
     try {
-      const invoice = await this.invoicesService.findOne(id);
+      const userId = req.user?.userId || req.user?.sub;
+      const invoice = await this.invoicesService.findOne(id, userId);
       
       if (!invoice) {
         throw new Error('Fatura não encontrada');

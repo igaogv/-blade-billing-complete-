@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import axios from 'axios';
 import { randomUUID } from 'crypto';
@@ -10,29 +10,41 @@ export class InvoicesService {
   private readonly mercadoPagoToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
   private readonly mercadoPagoUrl = 'https://api.mercadopago.com/v1/payments';
 
-  async findAll() {
+  async findAll(userId: string) {
     return this.prisma.invoice.findMany({
+      where: { userId },
       include: {
         client: true,
       },
     });
   }
 
-  async findOne(id: string) {
-    return this.prisma.invoice.findUnique({
+  async findOne(id: string, userId: string) {
+    const invoice = await this.prisma.invoice.findUnique({
       where: { id },
       include: {
         client: true,
       },
     });
+
+    if (!invoice) {
+      throw new NotFoundException('Fatura não encontrada');
+    }
+
+    if (invoice.userId !== userId) {
+      throw new ForbiddenException('Você não tem permissão para acessar esta fatura');
+    }
+
+    return invoice;
   }
 
-  async create(data: any) {
+  async create(data: any, userId: string) {
     const pixPayment = await this.createMercadoPagoPayment(data);
 
     return this.prisma.invoice.create({
       data: {
         clientId: data.clientId,
+        userId,
         value: data.value,
         dueDate: data.dueDate,
         status: 'PENDING',
@@ -82,7 +94,17 @@ export class InvoicesService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string, userId: string) {
+    const invoice = await this.prisma.invoice.findUnique({ where: { id } });
+    
+    if (!invoice) {
+      throw new NotFoundException('Fatura não encontrada');
+    }
+
+    if (invoice.userId !== userId) {
+      throw new ForbiddenException('Você não tem permissão para deletar esta fatura');
+    }
+
     return this.prisma.invoice.delete({
       where: { id },
     });

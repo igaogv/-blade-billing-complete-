@@ -1,0 +1,80 @@
+COPIAR E COLAR DIRETO NO VERCEL - VARIÁVEIS DE AMBIENTE
+=======================================================
+
+Abra: https://vercel.com/dashboard
+Projeto: blade-billing-complete
+Settings > Environment Variables
+
+Delete tudo que tem lá.
+
+Adicione CADA UMA DESSAS (copie o NAME e o VALUE, clique ADD):
+
+====================================================
+DATABASE_URL
+====================================================
+postgresql://postgres.dkpiceyiwlgmtfazolx:ltFqHUZDG0ABQHSh@aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+
+
+====================================================
+CORS_ORIGIN
+====================================================
+https://blade-billing-complete-jh2k-nhres9889.vercel.app
+
+
+====================================================
+JWT_SECRET
+====================================================
+7k9Lm@2XPiqHsVv08nBj35Ycz1dF3hGsT6uI*wQaE4ou1
+
+
+====================================================
+NODE_ENV
+====================================================
+production
+
+
+====================================================
+API_PORT
+====================================================
+3000
+
+
+====================================================
+FRONTEND_URL
+====================================================
+https://blade-billing-complete-jh2k-nhres9889.vercel.app
+
+
+====================================================
+MERCADOPAGO_ACCESS_TOKEN
+====================================================
+APP_USR_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+====================================================
+MERCADOPAGO_PUBLIC_KEY
+====================================================
+APP_USR_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+====================================================
+MERCADOPAGO_WEBHOOK_URL
+====================================================
+https://blade-billing-complete.vercel.app/api/mercadopago/webhook
+
+
+====================================================
+WHATSAPP_PHONE_NUMBER_ID
+====================================================
+seu_phone_id
+
+
+====================================================
+WHATSAPP_ACCESS_TOKEN
+====================================================
+seu_access_token
+
+
+Depois clique em "Save" e espera o deploy automático (2-3 minutos).
+
+Pronto! 🎉
