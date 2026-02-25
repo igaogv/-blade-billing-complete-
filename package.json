@@ -1,0 +1,8 @@
+{
+  "name": "blade-billing",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
