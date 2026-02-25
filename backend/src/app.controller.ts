@@ -15,8 +15,5 @@ export class AppController {
     };
   }
 
-  @Get('health')
-  health() {
-    return { status: 'ok', message: 'Backend is running!' };
-  }
+  // Health moved to HealthController (/api/health)
 }

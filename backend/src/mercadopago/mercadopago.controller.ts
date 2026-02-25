@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { MercadopagoService } from './mercadopago.service';
 
-@Controller('api/mercadopago')
+@Controller('mercadopago')
 export class MercadopagoController {
   constructor(private readonly mercadopagoService: MercadopagoService) {}
 

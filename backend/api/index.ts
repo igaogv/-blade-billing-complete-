@@ -14,9 +14,18 @@ async function createApp(): Promise<INestApplication> {
       logger: ['error', 'warn', 'log'],
     });
 
-    // CORS - Aceita qualquer origem para funcionar em produção
+    // CORS - usa whitelist via CORS_ORIGIN (mesmo comportamento de main.ts)
+    const corsOrigin = process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+      : [
+          'http://localhost:5173',
+          'http://localhost:3000',
+          'https://blade-billing-complete.vercel.app',
+          'https://blade-billing-complete-jh2k.vercel.app',
+        ];
+
     app.enableCors({
-      origin: true,
+      origin: corsOrigin,
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
