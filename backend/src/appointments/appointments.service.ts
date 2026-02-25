@@ -109,26 +109,3 @@ export class AppointmentsService {
     }
   }
 }
-
-  async update(id: string, data: any) {
-    try {
-      return await this.prisma.appointment.update({ where: { id }, data });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new InternalServerErrorException(error.message);
-      }
-      throw new InternalServerErrorException('Erro desconhecido ao atualizar agendamento.');
-    }
-  }
-
-  async delete(id: string) {
-    try {
-      return await this.prisma.appointment.delete({ where: { id } });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new InternalServerErrorException(error.message);
-      }
-      throw new InternalServerErrorException('Erro desconhecido ao excluir agendamento.');
-    }
-  }
-}
