@@ -30,7 +30,8 @@ async function bootstrap() {
   await app.listen(port, '0.0.0.0', () => {
     console.log(`✅ Backend rodando na porta ${port}`);
     console.log(`🌐 Ambiente: ${env}`);
-    console.log(`🔒 CORS habilitado para: ${corsOrigin.join(', ')}`);
+    const corsLog = Array.isArray(corsOrigin) ? corsOrigin.join(', ') : 'all origins';
+    console.log(`🔒 CORS habilitado para: ${corsLog}`);
     console.log(`📍 Prefixo de API: /api`);
     console.log(`🚀 API disponível em http://localhost:${port}/api\n`);
   });

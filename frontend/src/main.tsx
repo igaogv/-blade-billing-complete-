@@ -4,9 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './index.css'
 import App from './App'
 
-// FORCE REBUILD TRIGGER - 2025-12-15 15:53:30
+// FORCE REBUILD TRIGGER - 2026-02-26 12:15:00
 // Change timestamp to force Vercel to rebuild completely without cache
-console.log('🔧 BUILD TIMESTAMP: 2025-12-15 15:53:30')
+console.log('🔧 BUILD TIMESTAMP: 2026-02-26 12:15:00')
 console.log('✅ Cache clear enforced')
 
 // Cria uma instância do QueryClient

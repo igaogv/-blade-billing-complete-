@@ -1,4 +1,4 @@
-const FINAL_API_URL = 'https://esse-aqui-midia.vercel.app/api';
+const FINAL_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const authService = {
   async login(email: string, password: string) {
