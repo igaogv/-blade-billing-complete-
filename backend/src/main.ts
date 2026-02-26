@@ -11,13 +11,21 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
   }
 
-  // CORS whitelist: usa CORS_ORIGIN se presente, senão cai no default seguro.
-  const corsOrigin = process.env.CORS_ORIGIN
+  // CORS: aceita whitelist configurada e previews da Vercel.
+  const configuredOrigins = process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-    : true; // allow all if not specified to avoid preview-domain CORS blocks
+    : [];
+  const isAllowedOrigin = (origin?: string): boolean => {
+    if (!origin) return true;
+    if (configuredOrigins.length === 0) return true;
+    if (configuredOrigins.includes(origin)) return true;
+    return /^https:\/\/.*\.vercel\.app$/i.test(origin);
+  };
 
   app.enableCors({
-    origin: corsOrigin,
+    origin: (origin, callback) => {
+      callback(null, isAllowedOrigin(origin));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -30,7 +38,9 @@ async function bootstrap() {
   await app.listen(port, '0.0.0.0', () => {
     console.log(`✅ Backend rodando na porta ${port}`);
     console.log(`🌐 Ambiente: ${env}`);
-    const corsLog = Array.isArray(corsOrigin) ? corsOrigin.join(', ') : 'all origins';
+    const corsLog = configuredOrigins.length
+      ? `${configuredOrigins.join(', ')} + *.vercel.app`
+      : 'all origins';
     console.log(`🔒 CORS habilitado para: ${corsLog}`);
     console.log(`📍 Prefixo de API: /api`);
     console.log(`🚀 API disponível em http://localhost:${port}/api\n`);

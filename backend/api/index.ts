@@ -14,13 +14,21 @@ async function createApp(): Promise<INestApplication> {
       logger: ['error', 'warn', 'log'],
     });
 
-    // CORS - usa whitelist via CORS_ORIGIN (mesmo comportamento de main.ts)
-    const corsOrigin = process.env.CORS_ORIGIN
+    // CORS - aceita origens configuradas e previews da Vercel.
+    const configuredOrigins = process.env.CORS_ORIGIN
       ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-      : true; // allow all if not specified to avoid preview-domain CORS blocks
+      : [];
+    const isAllowedOrigin = (origin?: string): boolean => {
+      if (!origin) return true; // requests server-to-server/no-origin
+      if (configuredOrigins.length === 0) return true;
+      if (configuredOrigins.includes(origin)) return true;
+      return /^https:\/\/.*\.vercel\.app$/i.test(origin);
+    };
 
     app.enableCors({
-      origin: corsOrigin,
+      origin: (origin, callback) => {
+        callback(null, isAllowedOrigin(origin));
+      },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
