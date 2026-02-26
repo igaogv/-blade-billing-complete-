@@ -14,13 +14,7 @@ async function bootstrap() {
   // CORS whitelist: usa CORS_ORIGIN se presente, senão cai no default seguro.
   const corsOrigin = process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-    : [
-        'http://localhost:5173',
-        'http://localhost:3000',
-        'https://blade-billing-complete.vercel.app',
-        'https://blade-billing-complete-jh2k-ihgr-mendes-projects-6f50dff.vercel.app',
-        'https://blade-billing-complete-jh2k.vercel.app',
-      ];
+    : true; // allow all if not specified to avoid preview-domain CORS blocks
 
   app.enableCors({
     origin: corsOrigin,
