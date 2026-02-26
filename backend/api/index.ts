@@ -22,6 +22,7 @@ async function createApp(): Promise<INestApplication> {
           'http://localhost:3000',
           'https://blade-billing-complete.vercel.app',
           'https://blade-billing-complete-jh2k.vercel.app',
+          'https://blade-billing-complete-jh2k-ihgr-mendes-projects-6f50dff.vercel.app',
         ];
 
     app.enableCors({

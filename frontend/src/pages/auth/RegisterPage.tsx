@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Backend URL from environment variable
-const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://blade-billing-complete.vercel.app/api';
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

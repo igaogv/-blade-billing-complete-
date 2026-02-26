@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard';
 
 function App() {
   console.log('🚀 Blade Billing Frontend v1.0.2 - CORS & Security Fixes Applied');
-  console.log('✅ API Backend: https://blade-billing-complete.vercel.app/api');
+  console.log('✅ API Backend:', import.meta.env.VITE_API_URL || 'http://localhost:3000/api');
   
   return (
     <BrowserRouter>
