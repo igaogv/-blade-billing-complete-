@@ -66,8 +66,18 @@ export class AuthService {
         throw new UnauthorizedException('Email ou senha inválidos');
       }
 
-      // Validar senha
-      const isPasswordValid = await bcrypt.compare(data.password, user.password);
+      // Validar senha com fallback para registros antigos.
+      const storedPassword = (user.password || '').trim();
+      if (!storedPassword) {
+        throw new UnauthorizedException('Email ou senha invÃ¡lidos');
+      }
+
+      let isPasswordValid = false;
+      if (storedPassword.startsWith('$2')) {
+        isPasswordValid = await bcrypt.compare(data.password, storedPassword);
+      } else {
+        isPasswordValid = data.password === storedPassword;
+      }
 
       if (!isPasswordValid) {
         throw new UnauthorizedException('Email ou senha inválidos');
